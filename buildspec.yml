@@ -1,10 +1,17 @@
 version: 0.2
 phases:
   install:
+    runtime-versions:
+      python: 3.6
+  build:
     commands:
-      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket varun-lambda-pipeline --output-template-file outputSamTemplate.yaml
+      - pip install --upgrade awscli
+      - export BUCKET=varun-lambda-pipeline
+      - >-
+        aws cloudformation package --template-file samTemplate.yaml --s3-bucket
+        $BUCKET --output-template-file outputsamTemplate.yaml
 artifacts:
   type: zip
   files:
     - samTemplate.yaml
-    - outputSamTemplate.yaml
+    - outputsamTemplate.yaml
